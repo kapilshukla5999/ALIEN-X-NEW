@@ -29,20 +29,10 @@ jobs:
       - name: Build Manager APK
         run: |
           cd manager
-          ./gradlew assembleRelease
-
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: manager/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEYSTORE }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: alienx-manager
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          name: alienx-manager-debug
+          path: manager/app/build/outputs/apk/debug/*.apk
